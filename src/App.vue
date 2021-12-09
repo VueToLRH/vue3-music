@@ -6,16 +6,29 @@
       <component :is="Component" />
     </keep-alive>
   </router-view>
+  <player></player>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Header from '@/components/header/header'
 import Tab from '@/components/tab/tab'
+import Player from '@/components/player/player'
 
 export default {
   components: {
     MHeader: Header,
-    Tab
+    Tab,
+    Player
+  },
+  computed: {
+    ...mapState(['playlist']),
+    viewStyle() {
+      const bottom = this.playlist.length ? '60px' : '0'
+      return {
+        bottom
+      }
+    }
   }
 }
 </script>

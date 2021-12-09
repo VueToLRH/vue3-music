@@ -33,7 +33,7 @@ import SongList from '@/components/base/song-list/song-list'
 import Scroll from '@/components/wrap-scroll'
 import { mapActions, mapState } from 'vuex'
 
-const RESERVED_HEIGHT = 40 // 预留高度 - 顶部标题高度
+const RESERVED_HEIGHT = 40
 
 export default {
   name: 'music-list',
@@ -77,7 +77,6 @@ export default {
         display
       }
     },
-    // 背景图片样式
     bgImageStyle() {
       const scrollY = this.scrollY
       let zIndex = 0
@@ -94,7 +93,7 @@ export default {
 
       let scale = 1
       if (scrollY < 0) {
-        scale = 1 + Math.abs(scrollY / this.imageHeight) // 动态计算图片放大比例
+        scale = 1 + Math.abs(scrollY / this.imageHeight)
       }
 
       return {
@@ -112,7 +111,6 @@ export default {
         bottom
       }
     },
-    // 背景图片 filter - 滤镜 样式
     filterStyle() {
       let blur = 0
       const scrollY = this.scrollY
@@ -127,14 +125,13 @@ export default {
     ...mapState(['playlist'])
   },
   mounted() {
-    this.imageHeight = this.$refs.bgImage.clientHeight // 获取背景图片的高度
-    this.maxTranslateY = this.imageHeight - RESERVED_HEIGHT // 获取Y轴最大的平移高度
+    this.imageHeight = this.$refs.bgImage.clientHeight
+    this.maxTranslateY = this.imageHeight - RESERVED_HEIGHT
   },
   methods: {
     goBack() {
       this.$router.back()
     },
-    // 监听滚动
     onScroll(pos) {
       this.scrollY = -pos.y
     },
