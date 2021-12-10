@@ -50,7 +50,7 @@ export default {
     const page = ref(1)
     const loadingText = ref('')
     const noResultText = ref('抱歉，暂无搜索结果')
-    const manualLoading = ref(false)
+    const manualLoading = ref(false) // 手动触发上拉加载 loading 标识
 
     const loading = computed(() => {
       return !singer.value && !songs.value.length
@@ -64,12 +64,14 @@ export default {
       return isPullUpLoad.value && hasMore.value
     })
 
+    // 防止上拉加载标识 - 用于处理数据未满一屏继续请求数据，显示上拉加载 loading
     const preventPullUpLoad = computed(() => {
       return loading.value || manualLoading.value
     })
 
     const { isPullUpLoad, rootRef, scroll } = usePullUpLoad(searchMore, preventPullUpLoad)
 
+    // 监听搜索关键词
     watch(
       () => props.query,
       async newQuery => {
@@ -80,6 +82,7 @@ export default {
       }
     )
 
+    // 第一次搜索
     async function searchFirst() {
       if (!props.query) {
         return
@@ -109,6 +112,8 @@ export default {
       await makeItScrollable()
     }
 
+    // 判断是否可以滚动
+    // 用于判断数据是否加载满一屏,未满一屏则加载数据
     async function makeItScrollable() {
       if (scroll.value.maxScrollY >= -1) {
         manualLoading.value = true

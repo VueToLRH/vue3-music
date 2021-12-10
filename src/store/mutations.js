@@ -35,9 +35,11 @@ const mutations = {
       return item
     })
   },
+  // 设置搜索歌曲历史
   setSearchHistory(state, searches) {
     state.searchHistory = searches
   },
+  // 设置播放歌曲历史
   setPlayHistory(state, songs) {
     state.playHistory = songs
   }

@@ -18,32 +18,32 @@ export default function usePullUpLoad(requestData, preventPullUpLoad) {
       click: true
     }))
 
-    scrollVal.on('pullingUp', pullingUpHandler)
+    scrollVal.on('pullingUp', pullingUpHandler) // 上拉加载
 
     async function pullingUpHandler() {
       if (preventPullUpLoad.value) {
-        scrollVal.finishPullUp()
+        scrollVal.finishPullUp() // 结束上拉加载行为
         return
       }
       isPullUpLoad.value = true
       await requestData()
-      scrollVal.finishPullUp()
-      scrollVal.refresh()
+      scrollVal.finishPullUp() // 结束上拉加载行为
+      scrollVal.refresh() // 重新计算 BetterScroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常
       isPullUpLoad.value = false
     }
   })
 
   onUnmounted(() => {
-    scroll.value.destroy()
+    scroll.value.destroy() // 销毁 BetterScroll，解绑事件
   })
 
   onActivated(() => {
-    scroll.value.enable()
+    scroll.value.enable() // BetterScroll 启用，开始响应用户交互
     scroll.value.refresh()
   })
 
   onDeactivated(() => {
-    scroll.value.disable()
+    scroll.value.disable() // BetterScroll 禁用，不再响应用户交互
   })
 
   return {

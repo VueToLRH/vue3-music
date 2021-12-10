@@ -12,7 +12,7 @@
     "@better-scroll/observe-dom": "^2.4.2",
     "@better-scroll/pull-up": "^2.4.2",
     "@better-scroll/slide": "^2.4.2",
-    "axios": "^0.24.0",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "create-keyframe-animation": "^0.1.0",
     "good-storage": "^1.1.1",

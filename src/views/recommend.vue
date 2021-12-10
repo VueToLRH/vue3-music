@@ -27,6 +27,11 @@
         </div>
       </div>
     </scroll>
+    <router-view v-slot="{ Component }">
+      <transition appear name="slide">
+        <component :is="Component" :data="selectedAlbum" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -34,6 +39,8 @@
 import { getRecommend } from '@/service/recommend'
 import Slider from '@/components/base/slider/slider'
 import Scroll from '@/components/wrap-scroll'
+import storage from 'good-storage'
+import { ALBUM_KEY } from '@/assets/js/constant'
 
 export default {
   name: 'recommend',
@@ -59,7 +66,16 @@ export default {
     this.albums = result.albums
   },
   methods: {
-    selectItem() {}
+    selectItem(album) {
+      this.selectedAlbum = album
+      this.cacheAlbum(album)
+      this.$router.push({
+        path: `/recommend/${album.id}`
+      })
+    },
+    cacheAlbum(album) {
+      storage.session.set(ALBUM_KEY, album)
+    }
   }
 }
 </script>
